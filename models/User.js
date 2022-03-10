@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const ThoughtSchema = require('./Thought').schema;
 
 const UserSchema = new Schema({
     username: {
@@ -16,7 +17,7 @@ const UserSchema = new Schema({
     // Array of _id values referencing the Thought model
     thoughts: [ThoughtSchema],
     // Array of _id values referencing the User model (self-reference)
-    friends: [UserSchema]
+    friends: [this]
 }, {
     toJSON: {
         virtuals: true

@@ -29,11 +29,11 @@ const thoughtController = {
     //     "thoughtText": "Here's a cool thought...",
     //     "username": "lernantino",
     //     "userId": "5edff358a0fcb779aa7b118b"
-    //   }
+    // }
     createThought({ params, body }, res) {
         Thought.create(body)
             .then(({ _id }) => {
-                return User.findOneAndUpdate({ _id: params.userId }, { $push: { thoughts: _id } }, { new: true })
+                return User.findOneAndUpdate({ _id: body.userId }, { $push: { thoughts: _id } }, { new: true })
             })
             .then(dbUserData => {
                 if (!dbUserData) {

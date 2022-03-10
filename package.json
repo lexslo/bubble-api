@@ -1,0 +1,25 @@
+{
+    "dependencies": {
+        "express": "^4.17.3",
+        "mongoose": "^6.2.5"
+    },
+    "scripts": {
+        "start": "node server.js"
+    },
+    "name": "bubble-api",
+    "version": "1.0.0",
+    "main": "server.js",
+    "devDependencies": {},
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lexslo/bubble-api.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/lexslo/bubble-api/issues"
+    },
+    "homepage": "https://github.com/lexslo/bubble-api#readme",
+    "description": ""
+}
