@@ -1,70 +1,25 @@
-const addDateSuffix = date => {
-    let dateStr = date.toString();
+// function to format a timestamp
+module.exports = timestamp => {
 
-    // get last char of date string
-    const lastChar = dateStr.charAt(dateStr.length - 1);
-
-    if (lastChar === '1' && dateStr !== '11') {
-        dateStr = `${dateStr}st`;
-    } else if (lastChar === '2' && dateStr !== '12') {
-        dateStr = `${dateStr}nd`;
-    } else if (lastChar === '3' && dateStr !== '13') {
-        dateStr = `${dateStr}rd`;
-    } else {
-        dateStr = `${dateStr}th`;
-    }
-
-    return dateStr;
-};
-
-// function to format a timestamp, accepts the timestamp and an `options` object as optional parameters
-module.exports = (
-    timestamp, { monthLength = 'short', dateSuffix = true } = {}
-) => {
-    let months;
-
-    if (monthLength === 'short') {
-        months = {
-            0: 'Jan',
-            1: 'Feb',
-            2: 'Mar',
-            3: 'Apr',
-            4: 'May',
-            5: 'Jun',
-            6: 'Jul',
-            7: 'Aug',
-            8: 'Sep',
-            9: 'Oct',
-            10: 'Nov',
-            11: 'Dec'
-        };
-    } else {
-        months = {
-            0: 'January',
-            1: 'February',
-            2: 'March',
-            3: 'April',
-            4: 'May',
-            5: 'June',
-            6: 'July',
-            7: 'August',
-            8: 'September',
-            9: 'October',
-            10: 'November',
-            11: 'December'
-        };
-    }
+    let months = {
+        0: 'Jan',
+        1: 'Feb',
+        2: 'Mar',
+        3: 'Apr',
+        4: 'May',
+        5: 'Jun',
+        6: 'Jul',
+        7: 'Aug',
+        8: 'Sep',
+        9: 'Oct',
+        10: 'Nov',
+        11: 'Dec'
+    };
 
     const dateObj = new Date(timestamp);
     const formattedMonth = months[dateObj.getMonth()];
 
-    let dayOfMonth;
-
-    if (dateSuffix) {
-        dayOfMonth = addDateSuffix(dateObj.getDate());
-    } else {
-        dayOfMonth = dateObj.getDate();
-    }
+    let dayOfMonth = dateObj.getDate();
 
     const year = dateObj.getFullYear();
 
@@ -79,10 +34,10 @@ module.exports = (
     if (hour === 0) {
         hour = 12;
     }
+    // add 0 prefix to minutes if single digit minute
+    const minutes = ('0' + dateObj.getMinutes()).slice(-2);
 
-    const minutes = dateObj.getMinutes();
-
-    // set `am` or `pm`
+    // set AM or PM
     let periodOfDay;
 
     if (dateObj.getHours() >= 12) {
