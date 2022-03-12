@@ -1,5 +1,4 @@
-const { Schema, model } = require('mongoose');
-const ThoughtSchema = require('./Thought').schema;
+const { Schema, model, Types } = require('mongoose');
 
 const UserSchema = new Schema({
     username: {
@@ -15,9 +14,15 @@ const UserSchema = new Schema({
         match: [/.+\@.+\..+/, 'Please enter a valid email address']
     },
     // Array of _id values referencing the Thought model
-    thoughts: [ThoughtSchema],
+    thoughts: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Thought'
+    }],
     // Array of _id values referencing the User model (self-reference)
-    friends: [this]
+    friends: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 }, {
     toJSON: {
         virtuals: true
@@ -27,7 +32,9 @@ const UserSchema = new Schema({
 
 // Create a virtual friendCount: retrieves the length of the user's friends array field on query
 UserSchema.virtual('friendCount').get(function() {
-    return this.friends.length;
+    if (this.friends) {
+        return this.friends.length;
+    }
 });
 
 const User = model('User', UserSchema);
